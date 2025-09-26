@@ -1,4 +1,6 @@
-﻿namespace F25IntroToLinq
+﻿using ConsoleTables;
+
+namespace F25IntroToLinq
 {
     internal class Program
     {
@@ -96,11 +98,23 @@
 
 
             var empNames = from e in employees
-                           select new { e.FirstName, e.LastName };
+                           select new { e.FirstName, Last = e.LastName };
+
+            //empNames = employees.Select(e => new { e.FirstName, e.LastName});
 
             foreach (var emp in empNames)
                 Console.WriteLine(emp);
             Console.WriteLine("\n\n");
+
+
+            // consoletables example
+            var table = new ConsoleTable("First name", "Last name", "Salary");
+
+            foreach (var e in employees)
+                table.AddRow(e.FirstName, e.LastName, e.Salary.ToString("C"));
+
+            table.Write(Format.MarkDown);
+            Console.WriteLine("");
         }
     }
 }
